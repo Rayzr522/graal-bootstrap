@@ -2,6 +2,8 @@
 
 > A simple project to get you quickly going with a non-GraalVM-based project that allows you to still use Graal to run JS code on a stock JDK.
 
+This is very much a WIP project and currently is mainly a testing ground for me to try and find the most efficient way to set up Graal on a stock JDK.
+
 ## Tests
 
 All tests are currently handled by running a one-liner of JavaScript code that computes the first 1000 elements of Fibonacci's sequence and places them into an array. The one liner is as such:
