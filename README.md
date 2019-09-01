@@ -22,6 +22,15 @@ At the moment, the results for running the program on OpenJDK 8 with an i7-7700k
 578.84s total, 57.88ms avg, 54.97ms low (7667), 85.18ms high (8898)
 ```
 
+**UPDATE (08/31/19 22:19):** Using the experimental JVMCI compiler option on JDK 11 using the same hardware and system now gives the following results:
+```
+----- Context Creation -----
+773.17s total, 77.32ms avg, 62.98ms low (8117), 3201.16ms high (6175)
+
+----- Single Context -----
+47.92s total, 4.79ms avg, 4.24ms low (9957), 169.21ms high (3)
+```
+
 Running the same tests in Node.js using my own custom tool called [benchmarky](https://github.com/Rayzr522/benchmarky) returns the following results:
 
 NAME | REP | TOTAL | AVG | LOW | HIGH 

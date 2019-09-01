@@ -3,8 +3,14 @@ package me.rayzr522.graalbootstrap;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 public class Main {
     private static final int ITERATIONS = 10000;
+    public static final String JS_TEST_CODE = "new Array(1000).fill(0).reduce((out, _, i) => out.concat(i < 2 ? 1 : out[i - 1]  + out[i - 2]), [])\n";
+//    public static final String JS_TEST_CODE = "var arr = new Array(1000); for (var i = 0; i < arr.length; i++) { arr[i] = 0 }; arr.reduce(function (out, _, i) { return out.concat(i < 2 ? 1 : out[i - 1]  + out[i - 2]) }, [])";
 
     public static void main(String[] args) {
         Context context = Context.create();
@@ -12,6 +18,8 @@ public class Main {
         runBenchmark("Context Creation", ITERATIONS, Main::basicTest);
 
         runBenchmark("Single Context", ITERATIONS, () -> evaluateJs(context));
+
+//        runBenchmark("ScriptEngine Test", ITERATIONS, Main::scriptingEngineTest);
 
         context.close();
     }
@@ -54,6 +62,18 @@ public class Main {
     }
 
     private static void evaluateJs(Context context) {
-        Value value = context.eval("js", "new Array(1000).fill(0).reduce((out, _, i) => out.concat(i < 2 ? 1 : out[i - 1]  + out[i - 2]), [])");
+        Value value = context.eval("js", JS_TEST_CODE);
+    }
+
+
+    private static void scriptingEngineTest() {
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("nashorn");
+
+        try {
+            Object output = engine.eval(JS_TEST_CODE);
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
     }
 }
