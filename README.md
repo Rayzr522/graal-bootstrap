@@ -9,7 +9,9 @@ This is very much a WIP project and currently is mainly a testing ground for me 
 All tests are currently handled by running a one-liner of JavaScript code that computes the first 1000 elements of Fibonacci's sequence and places them into an array. The one liner is as such:
 
 ```javascript
-new Array(1000).fill(0).reduce((out, _, i) => out.concat(i < 2 ? 1 : out[i - 1]  + out[i - 2]), [])
+new Array(1000)
+  .fill(0)
+  .reduce((out, _, i) => out.concat(i < 2 ? 1 : out[i - 1] + out[i - 2]), []);
 ```
 
 At the moment, the results for running the program on OpenJDK 8 with an i7-7700k on Arch Linux are as such:
@@ -23,6 +25,7 @@ At the moment, the results for running the program on OpenJDK 8 with an i7-7700k
 ```
 
 **UPDATE (08/31/19 22:19):** Using the experimental JVMCI compiler option on JDK 11 using the same hardware and system now gives the following results (run `mvn exec:exec` using JDK 11 to test it):
+
 ```
 ----- Context Creation -----
 773.17s total, 77.32ms avg, 62.98ms low (8117), 3201.16ms high (6175)
@@ -33,14 +36,10 @@ At the moment, the results for running the program on OpenJDK 8 with an i7-7700k
 
 Running the same tests in Node.js using my own custom tool called [benchmarky](https://github.com/Rayzr522/benchmarky) returns the following results:
 
-NAME | REP | TOTAL | AVG | LOW | HIGH 
-------|-----|-------|-----|-----|-----
-fibonacci-oneliner | 10000 | 29292.00000000ms | 2.92920000ms | 2ms (5) | 5ms (193) 
+| NAME               | REP   | TOTAL            | AVG          | LOW     | HIGH      |
+| ------------------ | ----- | ---------------- | ------------ | ------- | --------- |
+| fibonacci-oneliner | 10000 | 29292.00000000ms | 2.92920000ms | 2ms (5) | 5ms (193) |
 
-*The numbers in parenthesis for low & high are the index of the repetition which resulted in that number.*
- 
+_The numbers in parenthesis for low & high are the index of the repetition which resulted in that number._
+
 There is clearly a bit of a difference between the two benchmarks. I am going to continue researching ways to improve the speed of Graal on a stock JDK.
- 
-## Join Me
-
-[![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://rayzr.dev/join)
